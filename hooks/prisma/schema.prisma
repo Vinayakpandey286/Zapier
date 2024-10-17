@@ -21,18 +21,21 @@ model User {
 }
 
 model Zap {
-  id String @id @default(uuid())
+  id        String   @id @default(uuid())
+  triggerId String
+  trigger   Trigger?
 }
 
 model Trigger {
-  id                  String            @id @default(uuid())
-  zapId               String
-  type                AvailableTriggers @relation(fields: [availableTriggersId], references: [id])
-  availableTriggersId String
+  id        String            @id @default(uuid())
+  zapId     String            @unique
+  triggerId String
+  type      AvailableTriggers @relation(fields: [triggerId], references: [id])
+  zap       Zap               @relation(fields: [zapId], references: [id])
 }
 
 model AvailableTriggers {
-  id      String    @id @default(uuid())
-  name    String
-  Trigger Trigger[]
+  id       String    @id @default(uuid())
+  name     String
+  triggers Trigger[]
 }
