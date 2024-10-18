@@ -59,6 +59,7 @@ model AvailableActions {
 model zapRun {
   id           String        @id @default(uuid())
   zapId        String
+  metadata     Json
   zap          Zap           @relation(fields: [zapId], references: [id])
   zapRunOutbox zapRunOutbox?
 }
